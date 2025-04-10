@@ -1,1 +1,21 @@
 site_name: Java PMML API documentation
+site_author: Villu Ruusmann
+
+theme:
+  name: material
+  custom_dir: overrides
+  features:
+    - content.code.copy
+    - navigation.expand
+
+extra:
+  generator: false
+
+nav:
+  - Home: index.md
+
+plugins:
+  - htmlproofer
+
+hooks:
+  - prettify.py
