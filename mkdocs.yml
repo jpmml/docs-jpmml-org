@@ -25,4 +25,4 @@ markdown_extensions:
   - pymdownx.superfences
 
 hooks:
-  - prettify.py
+  - hooks/prettify.py
