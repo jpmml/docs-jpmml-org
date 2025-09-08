@@ -1,5 +1,6 @@
 site_name: Java PMML API documentation
 site_author: Villu Ruusmann
+site_url: https://docs.jpmml.org
 
 theme:
   name: material
@@ -13,9 +14,15 @@ extra:
 
 nav:
   - Home: index.md
+  - Conversion:
+    - Scikit-Learn: conversion/sklearn/index.md
 
 plugins:
   - htmlproofer
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
 
 hooks:
   - prettify.py

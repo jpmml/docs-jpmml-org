@@ -6,6 +6,7 @@ The workflow is based around the [Predictive Model Markup Language (PMML)](https
 The conversion captures the entire prediction logic -- from data pre-processing to decision post-processing -- thereby breaking any and all dependencies to the original ML platform.
 
 PMML benefis:
+
 * Stable in time. Any PMML model ever created is usable today.
 * Minimal technical requirements. With PMML being an XML dialect, PMML models can be opened and maniplated with regular XML tools. No vendor lock-in.
 * Human approachable. A PMML model can be printed on paper, and analyzed and scored manually if need be. 
