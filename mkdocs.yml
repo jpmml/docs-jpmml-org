@@ -19,6 +19,8 @@ nav:
 
 plugins:
   - htmlproofer
+  - macros:
+      module_name: macros/resources
 
 markdown_extensions:
   - pymdownx.highlight

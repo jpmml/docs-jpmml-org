@@ -1,5 +1,6 @@
 ---
 title: Converting Scikit-Learn to PMML
+notebook: conversion/sklearn/index.ipynb
 ---
 
 Scikit-Learn (SkLearn) is supports many data science styles.
@@ -62,3 +63,5 @@ The `sklearn2pmml` command-line application is applicable to previously serializ
 ```bash
 sklearn2pmml -i Pipeline.pkl -o Pipeline.pmml
 ```
+
+{{ resources_section() }}
