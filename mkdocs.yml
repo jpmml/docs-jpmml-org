@@ -16,7 +16,7 @@ nav:
   - Home: index.md
   - Conversion:
     - Scikit-Learn:
-      - Overview: conversion/sklearn/index.md
+      - Scikit-Learn: conversion/sklearn/index.md
       - XGBoost: conversion/sklearn/xgboost.md
 
 plugins:
