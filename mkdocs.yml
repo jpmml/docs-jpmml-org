@@ -15,10 +15,13 @@ extra:
 nav:
   - Home: index.md
   - Conversion:
-    - Scikit-Learn: conversion/sklearn/index.md
+    - Scikit-Learn:
+      - Overview: conversion/sklearn/index.md
+      - XGBoost: conversion/sklearn/xgboost.md
 
 plugins:
-  - htmlproofer
+  - htmlproofer:
+      validate_external_urls: false
   - macros:
       module_name: macros/resources
 
