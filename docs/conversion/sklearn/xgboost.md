@@ -3,11 +3,9 @@ title: Converting Scikit-Learn XGBoost pipelines to PMML
 notebook: conversion/sklearn/xgboost.ipynb
 ---
 
-# Overview
+## Dataset
 
-The `xgboost` package provides Scikit-Learn API for commanding the Learning API.
-
-## Features
+### Features
 
 XGBoost estimators need to be parameterized both for the training algorithm (booster) and the dataset.
 The latter requirement stems from the fact that Scikit-Learn API must convert the user-provided NumPy matrix or Pandas' dataframe to XGBoost's `DMatrix` before dispatching to the Learning API.
@@ -24,7 +22,7 @@ XGBoost will simply fall back to safe defaults, and yield a fully-functional boo
 Such fallbacks are hard to detect due to limited tooling.
 The best option is to export the booster in some text-based data format, and manually inspect the tree structure for notable structural deficiencies (eg. not seeing any categorical splits).
 
-## Labels
+### Labels
 
 XGBoost classifiers need extra attention, because their ability to accept non-numeric class labels has changed considerabily between versions.
 
@@ -54,9 +52,9 @@ To persist the effective label encoder, assign it to the classifier as the `_le`
 classifier._le = le
 ```
 
-# Pipeline
+## Pipeline
 
-## Ordinal encoding (legacy)
+### Ordinal encoding (legacy)
 
 Columns are separated by operational type into continuous and categorical subsets.
 
@@ -95,7 +93,7 @@ feature_types = ["q"] * len(continuous_cols) + ["c"] * len(categorical_cols)
 classsifier = XGBClassifier(feature_types = feature_types)
 ```
 
-## Casting (modern)
+### Casting (modern)
 
 The main difference is converting any user-provided data container to Pandas' dataframe, which then enables casting columns into maximally specific type. 
 

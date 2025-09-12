@@ -3,7 +3,7 @@ title: Converting Scikit-Learn to PMML
 notebook: conversion/sklearn/index.ipynb
 ---
 
-# Overview
+## Overview
 
 Scikit-Learn (SkLearn) supports many data science styles.
 On one end, there are free-form scripts that use SkLearn utility functions sparingly.
@@ -48,7 +48,7 @@ pipeline = Pipeline([
 pipeline.fit(X, y)
 ```
 
-# Export to PMML
+## Export to PMML
 
 Convert SkLearn artifacts to PMML using the [`sklearn2pmml`](https://github.com/jpmml/sklearn2pmml) package.
 
