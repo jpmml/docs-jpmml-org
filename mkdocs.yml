@@ -18,6 +18,8 @@ nav:
     - Scikit-Learn:
       - Scikit-Learn: conversion/sklearn/index.md
       - XGBoost: conversion/sklearn/xgboost.md
+    - XGBoost:
+      - XGBoost: conversion/xgboost/index.md
 
 plugins:
   - htmlproofer:
