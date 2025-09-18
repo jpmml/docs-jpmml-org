@@ -16,10 +16,11 @@ nav:
   - Home: index.md
   - Conversion:
     - Scikit-Learn:
-      - Scikit-Learn: conversion/sklearn/index.md
+      - Overview: conversion/sklearn/index.md
       - XGBoost: conversion/sklearn/xgboost.md
     - XGBoost:
-      - XGBoost: conversion/xgboost/index.md
+      - Overview: conversion/xgboost/index.md
+      - Python: conversion/xgboost/python.md
 
 plugins:
   - htmlproofer:

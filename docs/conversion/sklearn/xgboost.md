@@ -5,39 +5,30 @@ notebook: conversion/sklearn/xgboost.ipynb
 
 ## Dataset
 
-### Features
-
-XGBoost estimators need to be parameterized both for the training algorithm (booster) and the dataset.
-The latter requirement stems from the fact that Scikit-Learn API must convert the user-provided NumPy matrix or Pandas' dataframe to XGBoost's `DMatrix` before dispatching to the Learning API.
-
-Important dataset parameters:
-
-* `feature_types`
-* `enable_categorical`
-* `missing`
-
-Incomplete or incorrect dataset parameterization typically does not raise errors.
-XGBoost will simply fall back to safe defaults, and yield a fully-functional booster, albeit with reduced predictive performance relative to the optimal one.
-
-Such fallbacks are hard to detect due to limited tooling.
-The best option is to export the booster in some text-based data format, and manually inspect the tree structure for notable structural deficiencies (eg. not seeing any categorical splits).
-
 ### Labels
 
-XGBoost classifiers need extra attention, because their ability to accept non-numeric class labels has changed considerabily between versions.
+XGBoost classifiers show inconsistent support for complex class labels across major versions.
 
-Versions 0.4 through 1.7 adhered to SkLearn conventions that if custom class labels (eg. strings) were passed to the `fit(X, y)` method, then the `predict(X)` method yielded the same.
-Unfortunately, in version 2.0 and newer, this is no longer the case.
+XGBoost versions 0.X through 1.X follow SkLearn conventions, allowing complex class labels as input to the `fit(X, y)` method and returning them from the `predict(X)` method.
+However, XGBoost version 2.0 removed this internal label encoding logic, and newer versions have not restored it.
 
-Encoding and decoding class labels manually:
+Use the `LabelEncoder` transformer for manual label encoding and decoding.
+Be aware that it sorts strings labels in ascending lexicographic order, which may lead to conflicts during binary classification that assumes strict "no-event followed by event" order.
+For example, string labels `["0", "1"]` sort correctly, but `["one", "zero"]` do not.
+
+Customize the order by (re-)setting the `classes_` attribute:
 
 ```python
 from sklearn.preprocessing import LabelEncoder
 
+import numpy
+
 le = LabelEncoder()
+le.classes_ = numpy.asarray(["zero", "one"])
 
 # Encode from strings to integers
-y_xgb = le.fit_transform(y).reshape((-1, ))
+# Avoid calling `fit` or `fit_transform` as it would override the custom order
+y_xgb = le.transform(y).reshape((-1, ))
 
 # Fit and predict integers
 yt_xgb = classifier.fit_predict(X, y_xgb)
@@ -46,24 +37,24 @@ yt_xgb = classifier.fit_predict(X, y_xgb)
 yt = le.inverse_transform(yt_xgb)
 ```
 
-To persist the effective label encoder, assign it to the classifier as the `_le` attribute:
+Attach the label encoder to the classifier using the `_le` attribute:
 
 ```python
 classifier._le = le
 ```
 
-## Pipeline
+## Workflow
 
-### Ordinal encoding (legacy)
+### Ordinal encoding
 
-Columns are separated by operational type into continuous and categorical subsets.
+Group columns by operational type into continuous and categorical subsets.
 
-The continuous subset may be further separated by data type into floating-point and integer subsets.
-However, this refinement is unnecessary from the training perspective, because `DMatrix` mangles all feature values into the same `float32` data type internally.
+The continuous subset may be further grouped by data type into floating-point and integer subsets.
+However, this refinement is unnecessary from the training perspective, because `DMatrix` munges all feature data into `float32` values internally.
 
 **General recipe**: pass continuous columns through unchanged, and encode categorical columns to integers.
 
-If you want categorical splits, then the list of suitable transformers is limited to `OrdinalEncoder` (direct mapping) and `TargetEncoder` (pre-processed mapping).
+If you desire categorical splits, then the list of suitable transformers is limited to `OrdinalEncoder` (direct mapping) and `TargetEncoder` (pre-processed mapping).
 Most importantly, avoid the `OneHotEncoder` transformer, because it binarizes data making advanced partitioning operations infeasible. 
 
 ```python
@@ -76,12 +67,12 @@ transformer = ColumnTransformer([
 ])
 ```
 
-The `ColumnTransformer` meta-transformer produces a NumPy matrix by default.
+The `ColumnTransformer` meta-transformer produces a uniform NumPy matrix.
 
-XGBoost estimators cannot guess the user intent behind each column. Left to themselves, they always assume continuous numeric data, and partition it using continuous splits.
+XGBoost estimators in their default configuraion would assume that all columns are continuous columns, and partition them using continuous splits.
 
-Specify NumPy matrix column types using the `feature_types` parameter.
-It accepts a list of string codes -- one per column. Use `q` (shorthand for "quantitative") for continuous columns and `c` for categorical ones. Finer typing is possible, but not necessary.
+Override this behaviour using the `feature_types` parameter.
+The appropriate value is a list of string enums, where `q` denotes continuous columns and `c` categorical ones.
 
 Generating and passing `feature_types`:
 
@@ -93,7 +84,7 @@ feature_types = ["q"] * len(continuous_cols) + ["c"] * len(categorical_cols)
 classsifier = XGBClassifier(feature_types = feature_types)
 ```
 
-### Casting (modern)
+### Casting
 
 The main difference is converting any user-provided data container to Pandas' dataframe, which then enables casting columns into maximally specific type. 
 
@@ -121,9 +112,8 @@ transformer = ColumnTransformer(
 transformer.set_output(transform = "pandas")
 ```
 
-XGBoost estimators can now collect all feature information from Pandas' dataframes automatically, making the `feature_types` parameter obsolete.
-
-However, for as long as categorical splits carry the experimental status, users must explicitly greenlight their use by passing `enable_categorical = True`:
+XGBoost estimators can now collect all feature descriptions from Pandas' dataframes automatically, making the `feature_types` parameter obsolete.
+Instead, you are required to confirm your desire for categorical splits by passing `enable_categorical = True`:
 
 ```python
 from xgboost import XGBClassifier

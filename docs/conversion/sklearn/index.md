@@ -12,6 +12,8 @@ On the other end, there are pipelines, which pack SkLearn transformers and the f
 PMML can support both styles.
 However, from the conversion perspective, the pipeline style is preferable to functional styles, because it enables easier automation.
 
+## Workflow
+
 A typical PMML-oriented SkLearn pipeline has the following stages:
 
 * Feature mapping (E). Select and order raw features.

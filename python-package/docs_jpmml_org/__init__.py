@@ -32,7 +32,7 @@ class Dataset(ABC):
 		role_mask = variables["role"] == "Feature"
 		type_mask = variables["type"].isin(types)
 
-		return variables[role_mask & type_mask]["name"].values
+		return variables[role_mask & type_mask]["name"].values.tolist()
 
 def fetch_bank_marketing():
 	class BankMarketingDataset(Dataset):
