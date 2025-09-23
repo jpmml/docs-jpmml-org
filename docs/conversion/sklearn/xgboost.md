@@ -67,9 +67,9 @@ transformer = ColumnTransformer([
 ])
 ```
 
-The `ColumnTransformer` meta-transformer produces a uniform NumPy matrix.
+This column transformer produces a homogeneous NumPy array.
 
-XGBoost estimators in their default configuraion would assume that all columns are continuous columns, and partition them using continuous splits.
+Just like [LightGBM estimators](lightgbm.md#ordinal-encoding), XGBoost estimators in their default configuraion would assume that all columns are continuous columns, and partition them using continuous splits.
 
 Override this behaviour using the `feature_types` parameter.
 The appropriate value is a list of string enums, where `q` denotes continuous columns and `c` categorical ones.
@@ -88,13 +88,13 @@ classsifier = XGBClassifier(feature_types = feature_types)
 
 The main difference is converting any user-provided data container to Pandas' dataframe, which then enables casting columns into maximally specific type. 
 
-The first part is easy. Simply instruct the `ColumnTransformer` meta-transformed to change modes using the `set_output` API.
+The first part is easy. Simply instruct the `ColumnTransformer` meta-transformer to change modes using the `set_output` API.
 
 The second part is harder, because SkLearn lacks a casting transformer.
 Suggested workarounds include writing a cast function and wrapping it into the `FunctionTransformer` transformer, or developing a custom cast transformer class from scratch.
 Neither option is particularly appealing due to productionization challenges.
 
-The `sklearn2pmml` package provides a `CastTransformer` transformer that meets all the requirements.
+The `sklearn2pmml` package provides the `sklearn2pmml.preprocessing.CastTransformer` transformer that meets all the requirements.
 
 **General recipe**: cast continuous columns to `numpy.float32`, and cast categorical columns to `pandas.CategoricalDtype`.
 When dealing with complex data types or disjoint value spaces, apply the `CastTransformer` to one column at a time.

@@ -7,7 +7,7 @@ notebook: conversion/xgboost/python.ipynb
 
 ### DMatrix
 
-The most suitable data container for data preparation work is Pandas dataframe.
+The most suitable data container for data preparation work is Pandas' dataframe.
 
 Group columns by their intended type into subsets, and cast them using the `astype(dtype)` method.
 
