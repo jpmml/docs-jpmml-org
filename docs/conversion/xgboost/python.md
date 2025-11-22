@@ -66,7 +66,7 @@ The `sklearn2pmml.sklearn2pmml(obj, pmml_path)` supports a small number of non-S
 A booster object embeds a simplified data schema.
 If the dataset contains categorical features, then override it with an external feature map so that the PMML converter can translate category level indices back to original values.
 
-The `xklearn2pmml.xgboost.make_feature_map(X)` utility function can generate various types of feature maps.
+The `sklearn2pmml.xgboost.make_feature_map(X)` utility function can generate various types of feature maps.
 The generation of ["pre-categorical" feature maps](index.md#feature-map) is activated by passing `category_to_indicator = True`.
 
 ```python

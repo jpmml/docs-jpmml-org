@@ -15,6 +15,8 @@ extra:
 nav:
   - Home: index.md
   - Conversion:
+    - Apache Spark:
+      - LibSVM: conversion/sparkml/libsvm.md
     - Scikit-Learn:
       - Overview: conversion/sklearn/index.md
       - LightGBM: conversion/sklearn/lightgbm.md
