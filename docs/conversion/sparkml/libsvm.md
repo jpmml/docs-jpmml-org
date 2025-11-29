@@ -25,6 +25,7 @@ The PMML converter can be assisted by supplying an _ad-hoc_ pipeline model inste
 
 ```scala
 import org.apache.spark.ml.{PipelineModel, PipelineStage}
+import org.jpmml.sparkml.PipelineModelUtil
 
 val preProcPipelineModel: PipelineModel = ???
 val libsvmPipelineModel: PipelineModel = ???
@@ -32,7 +33,7 @@ val libsvmPipelineModel: PipelineModel = ???
 val pmmlStages: Array[PipelineStage] = preProcPipelineModel.stages ++ libsvmPipelineModel.stages
 
 // Create a pipeline model from pre-fitted pipeline stages
-val pmmlPipelineModel = PipelineModelFactory.create("pmmlPipelineModel", pmmlStages)
+val pmmlPipelineModel = PipelineModelUtil.create("pmmlPipelineModel", pmmlStages)
 ```
 
 ## Dataset
@@ -112,7 +113,7 @@ val featuresAssembler = new VectorAssembler("featuresAssembler")
 	.setOutputCol("features")
 ```
 
-The most challenging operation in Scala (and Java) is creating the final pipeline model object, because the `PipelineModel(Array[PipelineStage])` constructor is private and thus only invokable using reflection.
+The most challenging operation in Scala is creating the final pipeline model object, because the `PipelineModel(Array[PipelineStage])` constructor is private and thus only invokable using reflection.
 PySpark has no such obstacle.
 
 Final assembly:
@@ -120,6 +121,7 @@ Final assembly:
 ```scala
 import org.apache.spark.ml.{PipelineModel, Transformer}
 import org.apache.spark.sql.types.StructType
+import org.jpmml.sparkml.PipelineModelUtil
 
 // Create new data schema, completely ignoring the LibSVM data schema
 val irisSchema = new StructType(irisLabelSchema.fields ++ irisFeaturesSchema.fields)
@@ -127,7 +129,7 @@ val irisSchema = new StructType(irisLabelSchema.fields ++ irisFeaturesSchema.fie
 // Create new pipeline model, by prepending new pipeline stages to LibSVM pipeline stages
 val irisStages: Array[Transformer] = Array(speciesIndexerModel, featuresAssembler) ++ libsvmPipelineModel.stages
 
-val irisPipelineModel = PipelineModelFactory.create("irisPipelineModel", irisStages)
+val irisPipelineModel = PipelineModelUtil.create("irisPipelineModel", irisStages)
 ```
 
 ## Export to PMML
