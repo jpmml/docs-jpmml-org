@@ -17,6 +17,7 @@ nav:
   - Conversion:
     - Apache Spark:
       - LibSVM: conversion/sparkml/libsvm.md
+      - XGBoost: conversion/sparkml/xgboost.md
     - Scikit-Learn:
       - Overview: conversion/sklearn/index.md
       - LightGBM: conversion/sklearn/lightgbm.md
