@@ -88,7 +88,7 @@ Inspect the booster-level version attribute, and learner-level data schema attri
 import json
 
 with open("Booster.json", "r") as js_file:
-    jsbooster = json.load(js_file)
+	jsbooster = json.load(js_file)
 
 print(jsbooster["version"])
 

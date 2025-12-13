@@ -105,16 +105,16 @@ from sklearn.pipeline import Pipeline
 from sklearn2pmml.preprocessing import CastTransformer
 
 transformer = ColumnTransformer(
-    [("continuous", "passthrough", continuous_cols)] +
-    [(categorical_col, CastTransformer("category"), [categorical_col]) for categorical_col in categorical_cols]
+	[("continuous", "passthrough", continuous_cols)] +
+	[(categorical_col, CastTransformer("category"), [categorical_col]) for categorical_col in categorical_cols]
 )
 transformer.set_output(transform = "pandas")
 
 classifier = LGBMClassifier(random_state = 42)
 
 pipeline = Pipeline([
-    ("transformer", transformer),
-    ("classifier", classifier)
+	("transformer", transformer),
+	("classifier", classifier)
 ])
 pipeline.fit(X, y)
 ```
