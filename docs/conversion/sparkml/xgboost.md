@@ -144,15 +144,15 @@ The vector representation is decided by internal heuristics. There is no param f
 
 This poses a serious problem, because XGBoost estimators accept dense vectors, but reject sparse vectors on the grounds that their content is prone to mis-interpretation.
 
-The JPMML-SparkML library provides the `org.jpmml.sparkml.feature.SparseToDenseTransformer` transformer for unifying any vector representation to a dense vector.
+The JPMML-SparkML library provides the `org.jpmml.sparkml.feature.VectorDensifier` transformer for unifying any vector representation to a dense vector.
 
 Densifying feature vectors for XGBoost estimator needs:
 
 ```scala
-import org.jpmml.sparkml.feature.SparseToDenseTransformer
+import org.jpmml.sparkml.feature.VectorDensifier
 import ml.dmlc.xgboost4j.scala.spark.XGBoostRegressor
 
-val vecDensifier = new SparseToDenseTransformer()
+val vecDensifier = new VectorDensifier()
 	.setInputCol(vecAssembler.getOutputCol)
 	.setOutputCol(vecAssembler.getOutputCol + "Dense")
 
