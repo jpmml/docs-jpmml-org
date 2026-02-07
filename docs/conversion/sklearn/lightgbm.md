@@ -14,8 +14,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
 
 transformer = ColumnTransformer([
-	("continuous", "passthrough", continuous_cols),
-	("categorical", OrdinalEncoder(), categorical_cols)
+	("cont", "passthrough", cont_cols),
+	("cat", OrdinalEncoder(), cat_cols)
 ])
 ```
 
@@ -35,7 +35,7 @@ Generating and passing `categorical_feature` as integer column indices:
 from lightgbm import LGBMClassifier
 from sklearn.pipeline import Pipeline
 
-categorical_feature = [len(continuous_cols) + categorical_idx for categorical_idx in range(0, len(categorical_cols))]
+categorical_feature = [len(cont_cols) + categorical_idx for categorical_idx in range(0, len(cat_cols))]
 
 classifier = LGBMClassifier(random_state = 42)
 
@@ -52,8 +52,8 @@ Generating and passing `categorical_feature` as string column names:
 from lightgbm import LGBMClassifier
 from sklearn.pipeline import Pipeline
 
-feature_name = continuous_cols + categorical_cols
-categorical_feature = categorical_cols
+feature_name = cont_cols + cat_cols
+categorical_feature = cat_cols
 
 classifier = LGBMClassifier(random_state = 42)
 
@@ -105,8 +105,8 @@ from sklearn.pipeline import Pipeline
 from sklearn2pmml.preprocessing import CastTransformer
 
 transformer = ColumnTransformer(
-	[("continuous", "passthrough", continuous_cols)] +
-	[(categorical_col, CastTransformer("category"), [categorical_col]) for categorical_col in categorical_cols]
+	[("cont", "passthrough", cont_cols)] +
+	[(cat_col, CastTransformer("category"), [cat_col]) for cat_col in cat_cols]
 )
 transformer.set_output(transform = "pandas")
 

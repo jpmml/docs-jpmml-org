@@ -32,8 +32,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 # Combined feature mapper and transformer
 transformer = ColumnTransformer([
-	("continuous", StandardScaler(), continuous_cols),
-	("categorical", OneHotEncoder(), categorical_cols)
+	("cont", StandardScaler(), cont_cols),
+	("cat", OneHotEncoder(), cat_cols)
 ], remainder = "drop")
 
 # Feature selector

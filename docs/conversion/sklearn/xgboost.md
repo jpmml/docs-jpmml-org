@@ -62,8 +62,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
 
 transformer = ColumnTransformer([
-	("continuous", "passthrough", continuous_cols),
-	("categorical", OrdinalEncoder(), categorical_cols)
+	("cont", "passthrough", cont_cols),
+	("cat", OrdinalEncoder(), cat_cols)
 ])
 ```
 
@@ -79,7 +79,7 @@ Generating and passing `feature_types`:
 ```python
 from xgboost import XGBClassifier
 
-feature_types = ["q"] * len(continuous_cols) + ["c"] * len(categorical_cols)
+feature_types = ["q"] * len(cont_cols) + ["c"] * len(cat_cols)
 
 classsifier = XGBClassifier(feature_types = feature_types)
 ```
@@ -105,9 +105,9 @@ from sklearn2pmml.preprocessing import CastTransformer
 
 transformer = ColumnTransformer(
 	# Cast continuous columns together
-	[("continuous", CastTransformer(dtype = numpy.float32), continuous_cols)] +
+	[("cont", CastTransformer(dtype = numpy.float32), cont_cols)] +
 	# Cast categorical columns one by one due to disjoint value spaces
-	[(categorical_col, CastTransformer(dtype = "category"), [categorical_col]) for categorical_col in categorical_cols]
+	[(cat_col, CastTransformer(dtype = "category"), [cat_col]) for cat_col in cat_cols]
 )
 transformer.set_output(transform = "pandas")
 ```

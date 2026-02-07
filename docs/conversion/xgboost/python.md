@@ -16,17 +16,17 @@ For continuous columns, specify the "smallest" appropriate NumPy or Pandas' data
 For categorical columns, specify the Pandas' categorical data type.
 
 ```python
-X = X[float_cols + int_cols + categorical_cols]
+X = X[float_cols + int_cols + cat_cols]
 
 X[float_cols] = X[float_cols].astype("Float32")
 X[int_cols] = X[int_cols].astype("Int32")
-X[categorical_cols] = X[categorical_cols].astype("category")
+X[cat_cols] = X[cat_cols].astype("category")
 ```
 
 Prepare a `feature_types` helper parameter to freeze the interpretation of feature data.
 
 ```python
-feature_types = ["float"] * len(float_cols) + ["int"] * len(int_cols) + ["c"] * len(categorical_cols)
+feature_types = ["float"] * len(float_cols) + ["int"] * len(int_cols) + ["c"] * len(cat_cols)
 ```
 
 Categorical targets are similar to categorical features.
