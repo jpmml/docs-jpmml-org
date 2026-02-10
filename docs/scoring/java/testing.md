@@ -1,5 +1,6 @@
 ---
 title: Integration testing Java PMML applications
+project: scoring/java/testing
 ---
 
 ## Overview
@@ -340,3 +341,5 @@ Sanitize the Apache Maven build output by redirecting all conflicts to a separat
 ```bash
 mvn clean test 2> conflicts.txt
 ```
+
+{{ resources_section() }}

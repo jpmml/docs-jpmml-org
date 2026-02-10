@@ -17,6 +17,13 @@ def define_env(env):
 
 			resources.append(("Notebook", "[View]({}) or [Download]({})".format(view_link, download_link)))
 
+		project = page.meta.get("project", None)
+		if project:
+			view_link = "https://github.com/{}/tree/master/projects/{}".format(repo, project)
+			download_link = "https://download-directory.github.io/?" + view_link
+
+			resources.append(("Project template", "[View]({}) or [Download]({})".format(view_link, download_link)))
+
 		if resources:
 			resources_list = "\n".join("* {}: {}".format(name, links) for name, links in resources)
 

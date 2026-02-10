@@ -1,0 +1,2 @@
+scikit-learn==1.8.0
+sklearn2pmml==0.127.2

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
+	<Header>
+		<Application name="SkLearn2PMML package" version="0.127.2"/>
+		<Timestamp>2026-02-08T13:11:51Z</Timestamp>
+	</Header>
+	<DataDictionary>
+		<DataField name="y" optype="categorical" dataType="string">
+			<Value value="setosa"/>
+			<Value value="versicolor"/>
+			<Value value="virginica"/>
+		</DataField>
+		<DataField name="sepal length (cm)" optype="continuous" dataType="double"/>
+		<DataField name="sepal width (cm)" optype="continuous" dataType="double"/>
+		<DataField name="petal length (cm)" optype="continuous" dataType="double"/>
+		<DataField name="petal width (cm)" optype="continuous" dataType="double"/>
+	</DataDictionary>
+	<RegressionModel functionName="classification" algorithmName="sklearn.linear_model._logistic.LogisticRegression" normalizationMethod="softmax">
+		<MiningSchema>
+			<MiningField name="y" usageType="target"/>
+			<MiningField name="sepal length (cm)"/>
+			<MiningField name="sepal width (cm)"/>
+			<MiningField name="petal length (cm)"/>
+			<MiningField name="petal width (cm)"/>
+		</MiningSchema>
+		<Output>
+			<OutputField name="probability(setosa)" optype="continuous" dataType="double" feature="probability" value="setosa"/>
+			<OutputField name="probability(versicolor)" optype="continuous" dataType="double" feature="probability" value="versicolor"/>
+			<OutputField name="probability(virginica)" optype="continuous" dataType="double" feature="probability" value="virginica"/>
+		</Output>
+		<RegressionTable intercept="9.838539379043635" targetCategory="setosa">
+			<NumericPredictor name="sepal length (cm)" coefficient="-0.4184456286916816"/>
+			<NumericPredictor name="sepal width (cm)" coefficient="0.9663768777943086"/>
+			<NumericPredictor name="petal length (cm)" coefficient="-2.5206183635290604"/>
+			<NumericPredictor name="petal width (cm)" coefficient="-1.0841594056452075"/>
+		</RegressionTable>
+		<RegressionTable intercept="2.2220159572554072" targetCategory="versicolor">
+			<NumericPredictor name="sepal length (cm)" coefficient="0.5297919959501407"/>
+			<NumericPredictor name="sepal width (cm)" coefficient="-0.314416407494849"/>
+			<NumericPredictor name="petal length (cm)" coefficient="-0.19993272477734728"/>
+			<NumericPredictor name="petal width (cm)" coefficient="-0.9473436268527732"/>
+		</RegressionTable>
+		<RegressionTable intercept="-12.060555336298684" targetCategory="virginica">
+			<NumericPredictor name="sepal length (cm)" coefficient="-0.11134636725844733"/>
+			<NumericPredictor name="sepal width (cm)" coefficient="-0.6519604702994625"/>
+			<NumericPredictor name="petal length (cm)" coefficient="2.720551088306387"/>
+			<NumericPredictor name="petal width (cm)" coefficient="2.031503032497978"/>
+		</RegressionTable>
+	</RegressionModel>
+</PMML>
