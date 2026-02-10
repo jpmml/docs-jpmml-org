@@ -14,6 +14,9 @@ extra:
 
 nav:
   - Home: index.md
+  - Scoring:
+    - Java:
+      - Integration testing: scoring/java/testing.md
   - Conversion:
     - Apache Spark:
       - LibSVM: conversion/sparkml/libsvm.md
