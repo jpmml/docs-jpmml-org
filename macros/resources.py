@@ -20,7 +20,7 @@ def define_env(env):
 		project = page.meta.get("project", None)
 		if project:
 			view_link = "https://github.com/{}/tree/master/projects/{}".format(repo, project)
-			download_link = "https://download-directory.github.io/?" + view_link
+			download_link = "https://download-directory.github.io/?url=" + view_link
 
 			resources.append(("Project template", "[View]({}) or [Download]({})".format(view_link, download_link)))
 
