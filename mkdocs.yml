@@ -24,6 +24,7 @@ nav:
     - Scikit-Learn:
       - Overview: conversion/sklearn/index.md
       - LightGBM: conversion/sklearn/lightgbm.md
+      - NGBoost: conversion/sklearn/ngboost.md
       - XGBoost: conversion/sklearn/xgboost.md
     - XGBoost:
       - Overview: conversion/xgboost/index.md
